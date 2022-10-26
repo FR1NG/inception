@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  nginx:
+    build: ./requirements/nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - type: volume
+        source: data_volume
+        target: /www/html
+      - type: bind
+        source: ./requirements/nginx/test
+        target: /www/html
+volumes:
+  data_volume:
