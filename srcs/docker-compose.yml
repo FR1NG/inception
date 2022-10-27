@@ -5,11 +5,32 @@ services:
     ports:
       - "80:80"
     volumes:
-      - type: volume
-        source: data_volume
-        target: /www/html
-      - type: bind
-        source: ./requirements/nginx/test
-        target: /www/html
+      - data_volume:/data/:rw
+    networks:
+      - hchakoub_network
+    depends_on:
+      - wordpress
+  wordpress:
+    build: ./requirements/wordpress/
+    ports:
+      - "9000:9000"
+    volumes:
+      - data_volume:/data/:rw
+    depends_on:
+      - mysql
+    networks:
+        - hchakoub_network
+  mysql:
+    build: ./requirements/mysql/
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_volume:/var/lib/mysql/data:rw
+    networks:
+      - hchakoub_network
 volumes:
   data_volume:
+  db_volume:
+networks:
+  hchakoub_network:
+    driver: bridge
