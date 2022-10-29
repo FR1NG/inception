@@ -20,6 +20,8 @@ services:
       - mysql
     networks:
         - hchakoub_network
+    environment:
+      - "MYSQL_HOST=${MYSQL_HOST}"
   mysql:
     build: ./requirements/mysql/
     ports:

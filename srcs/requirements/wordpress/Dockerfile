@@ -3,20 +3,26 @@ FROM debian:buster
 # setting working directory
 WORKDIR /data/www/html
 
-# copy the config file 
-COPY conf/wp-config.php /data/www/html/
+# copy tools
+COPY ./tools /data/
 
-# installing php and fpm
-RUN apt update && apt install -y php7.3 \
+RUN apt update \
+&& apt install -y php7.3 \
 && apt install php7.3-fpm -y \
 && apt install php-mysql -y \
+&& apt install mariadb-client -y \
+&& chown -R www-data:www-data . \
 && apt install curl -y \
 && curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/bin/wp-cli \
 && chmod +x /usr/bin/wp-cli \
-&& wp-cli core download --allow-root 
-# && wp-cli install --allow-root
+&& wp-cli core download --allow-root
 
-COPY tests/index.html /data/www/html/
+#copy configuration of fpm
+COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
+
+COPY ./tools/ /data/tools/
+
+ENTRYPOINT [ "/data/entry.sh" ]
 
 # runing fpm service
 RUN service php7.3-fpm start
