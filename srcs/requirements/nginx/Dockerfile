@@ -5,8 +5,10 @@ RUN apt update && apt install nginx -y
 
 COPY conf/default /etc/nginx/sites-available
 
-# # this line only for test
-# COPY test/ /data/www/html
-RUN mkdir -p /data/logs
-RUN touch /data/logs/nginx-access.log
-CMD ["nginx", "-g", "daemon off;"]
+COPY ./tools/ /tools/nginx/
+
+# RUN echo "daemon off;" >> /etc/nginx/conf.d/nginx.conf
+
+ENTRYPOINT [ "/tools/nginx/init.sh" ]
+
+# CMD ["nginx", "-g", "daemon off;"]

@@ -22,10 +22,9 @@ COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
 
 COPY ./tools/ /data/tools/
 
-ENTRYPOINT [ "/data/entry.sh" ]
-
-# runing fpm service
 RUN service php7.3-fpm start
+
+ENTRYPOINT [ "/data/tools/entry.sh" ]
 
 # runing fpm as root process
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
