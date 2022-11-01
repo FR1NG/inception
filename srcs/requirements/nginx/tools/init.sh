@@ -4,6 +4,5 @@ mkdir -p /logs/nginx
 touch /logs/nginx/nginx-access.log
 
 chown -R www-data:www-data /data
-# $@
 
-nginx -g "daemon off;"
+nginx -g 'daemon off;'

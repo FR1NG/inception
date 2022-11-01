@@ -1,21 +1,24 @@
-# user www-data www-data
 
-# server {
-# 	listen 80 default_server;
-# 	listen [::]:80 default_server;
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
 
-# 	root /data/www/html;
-# 	access_log /logs/nginx/nginx-access.log;
-# 	index index.php index.html index.htm index.nginx-debian.html;
+	root /data/www/html;
+	access_log /logs/nginx/nginx-access.log;
+	index index.php index.html index.htm index.nginx-debian.html;
 
-# 	location ~ \.php$ {
-# 		include snippets/fastcgi-php.conf;
+	location ~ \.php$ {
+		# With php-cgi (or other tcp sockets):
+		#  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass wordpress:9000;
+		fastcgi_index index.php;
+		# include fastcgi_params;
+		# fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		# fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+	}
 
-# 		# With php-cgi (or other tcp sockets):
-# 		fastcgi_pass wordpress:9000;
-# 	}
+}
 
-# }
 
 #server {
 #	listen 80;

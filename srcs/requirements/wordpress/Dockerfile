@@ -15,7 +15,7 @@ RUN apt update \
 && apt install curl -y \
 && curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/bin/wp-cli \
 && chmod +x /usr/bin/wp-cli \
-&& wp-cli core download --allow-root
+&& wp-cli core download --allow-root 
 
 #copy configuration of fpm
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
@@ -23,6 +23,8 @@ COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
 COPY ./tools/ /data/tools/
 
 RUN service php7.3-fpm start
+
+EXPOSE 9000
 
 ENTRYPOINT [ "/data/tools/entry.sh" ]
 
