@@ -4,6 +4,7 @@ services:
     build: ./requirements/nginx/
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - data_volume:/data/:rw
     networks:
@@ -32,7 +33,17 @@ services:
       - hchakoub_network
 volumes:
   data_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/hchakoub/data/web'
   db_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/hchakoub/data/mysql'
 networks:
   hchakoub_network:
     driver: bridge

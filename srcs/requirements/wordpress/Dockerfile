@@ -6,6 +6,7 @@ WORKDIR /data/www/html
 # copy tools
 COPY ./tools /data/
 
+# installing depes
 RUN apt update \
 && apt install -y php7.3 \
 && apt install php7.3-fpm -y \
@@ -13,11 +14,12 @@ RUN apt update \
 && apt install mariadb-client -y \
 && chown -R www-data:www-data . \
 && apt install curl -y \
-&& curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/bin/wp-cli \
-&& chmod +x /usr/bin/wp-cli \
-&& wp-cli core download --allow-root 
+&& apt install htop -y\
+&& curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/bin/wp \
+&& chmod +x /usr/bin/wp \
+&& wp core download --allow-root 
 
-#copy configuration of fpm
+# copy configuration of fpm
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
 
 COPY ./tools/ /data/tools/

@@ -2,8 +2,12 @@
 IMAGES=${shell docker images -aq}
 CONTAINERS=${shell docker container ls -aq}
 
+up: 
+	docker compose up
+
 build : 
-	docker compose up --build
+	@echo "building..."
+	@docker compose up --build
 
 rmi:
 	docker rmi -f $(IMAGES)

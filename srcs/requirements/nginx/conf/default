@@ -1,32 +1,33 @@
 
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+    listen       443 ssl;
+	#listen 80;
+    server_name hchakoub.42.fr;
+    access_log /logs/nginx/access.log;
+    error_log /logs/nginx/error.log;
 
-	root /data/www/html;
-	access_log /logs/nginx/nginx-access.log;
+	 ssl_certificate /etc/ssl/certs/hchakoub.42.fr.crt;
+     ssl_certificate_key /etc/ssl/private/hchakoub.42.fr.key;
+
 	index index.php index.html index.htm index.nginx-debian.html;
 
+    root   /data/www/html;
 	location ~ \.php$ {
-		# With php-cgi (or other tcp sockets):
-		#  fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass wordpress:9000;
-		fastcgi_index index.php;
-		# include fastcgi_params;
-		# fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		# fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+					include fastcgi_params;
+					fastcgi_split_path_info ^(.+\.php)(/.+)$;
+					fastcgi_pass wordpress:9000;
+					fastcgi_index index.php;
+					fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
 	}
 
 }
 
 
-#server {
-#	listen 80;
-#	listen [::]:80;
-#
-#	server_name example.com;
-#
-#	return 301 https://example.com$request_uri;
-#
-#
-#}
+server {
+	listen 80;
+
+	server_name hchakoub.42.fr;
+
+	return 301 https://$host$request_uri;
+
+}
