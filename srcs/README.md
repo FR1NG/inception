@@ -1,3 +1,11 @@
+# to do
+
+- return to tls TLSv1.2 or TLSv1.3
+- add restart in case of crash
+- different between add and copy
+- add user to wordpress
+
+
 # inception
 ## wordpress
 ### *steps :*
