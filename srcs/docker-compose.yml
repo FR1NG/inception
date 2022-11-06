@@ -17,6 +17,7 @@ services:
       - data_volume:/data/:rw
     depends_on:
       - mysql
+      - redis
     networks:
         - hchakoub_network
     environment:
