@@ -32,6 +32,10 @@ services:
     build: ./bonus/redis/
     networks:
       - hchakoub_network
+  ftp:
+    build: ./bonus/ftp/
+    volumes:
+      - data_volume:/data/:rw
 volumes:
   data_volume:
     driver: local
