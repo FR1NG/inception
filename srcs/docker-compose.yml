@@ -34,8 +34,15 @@ services:
       - hchakoub_network
   ftp:
     build: ./bonus/ftp/
+    ports:
+      - "21:21"
     volumes:
-      - data_volume:/data/:rw
+      - data_volume:/home/${FTP_USER}:rw
+    environment:
+      - FTP_USER=${FTP_USER}
+      - FTP_PASSWORD=${FTP_PASSWORD}
+      - FTP_ROOT_PASSWORD=${FTP_ROOT_PASSWORD}
+    restart: always
 volumes:
   data_volume:
     driver: local
