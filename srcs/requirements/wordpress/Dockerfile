@@ -3,9 +3,6 @@ FROM debian:buster
 # setting working directory
 WORKDIR /data/www/html
 
-# copy tools
-COPY ./tools /data/
-
 # installing depes
 RUN apt update \
 && apt install -y php7.3 \
@@ -17,19 +14,20 @@ RUN apt update \
 && apt install htop -y\
 && curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/bin/wp \
 && chmod +x /usr/bin/wp \
-&& wp core download --allow-root \
 && apt install php7.3-redis -y
 
 # copy configuration of fpm
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
+ADD conf/www.conf /etc/php/7.3/fpm/pool.d/
 
-COPY ./tools/ /data/tools/
+ADD ./tools/entry.sh /usr/bin/entry
+
+RUN chmod +x /usr/bin/entry
 
 RUN service php7.3-fpm start
 
 EXPOSE 9000
 
-ENTRYPOINT [ "/data/tools/entry.sh" ]
+ENTRYPOINT [ "entry" ]
 
 # runing fpm as root process
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
