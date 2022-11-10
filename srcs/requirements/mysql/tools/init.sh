@@ -1,7 +1,7 @@
 #!/bin/sh
 
 service mysql start 
-mysql -u root --password=root << EOF
+mysql -u root << EOF
     CREATE USER 'dbuser'@'%' IDENTIFIED BY 'dbpassword';
     CREATE database wpdbname;
     GRANT ALL PRIVILEGES ON wpdbname.* TO 'dbuser'@'%';
