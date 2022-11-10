@@ -1,11 +1,12 @@
 #!/bin/sh
 
 service mysql start 
-mysql -u root --password=root << EOF
-    CREATE USER 'dbuser'@'%' IDENTIFIED BY 'dbpassword';
-    CREATE database wpdbname;
-    GRANT ALL PRIVILEGES ON wpdbname.* TO 'dbuser'@'%';
-    ALTER USER 'root'@'localhost' IDENTIFIED BY 'rootpassword';
+
+mysqladmin -u root password ${DB_ROOT_PASSWORD}
+mysql -u root --password=${DB_ROOT_PASSWORD} << EOF
+    CREATE USER ${DB_USER} IDENTIFIED BY ${DB_PASSWORD};
+    CREATE database ${DB_NAME};
+    GRANT ALL PRIVILEGES ON wpdbname.* TO ${DB_USER};
     FLUSH PRIVILEGES;
 EOF
 $@

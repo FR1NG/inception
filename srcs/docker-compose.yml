@@ -21,6 +21,9 @@ services:
         - hchakoub_network
     environment:
       - "DB_HOST=${DB_HOST}"
+      - "DB_NAME=${DB_NAME}"
+      - "DB_USER=${DB_USER}"
+      - "DB_PASSWORD=${DB_PASSWORD}"
       - "WP_TITLE=${WP_TITLE}"
       - "WP_ADMIN=${WP_ADMIN}"
       - "WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}"
@@ -46,6 +49,9 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    restart: always
+    ports:
+      - "3306:3306"
   redis:
     build: ./bonus/redis/
     networks:
@@ -67,13 +73,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/hchakoub/data/wordpress/'
+      device: /home/${USER}/data/wordpress/
   db_volume:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/hchakoub/data/mariadb/'
+      device: /home/${USER}/data/mariadb/
 networks:
   hchakoub_network:
     driver: bridge

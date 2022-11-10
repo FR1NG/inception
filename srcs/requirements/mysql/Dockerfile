@@ -8,16 +8,14 @@ ENV DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
 ENV DB_NAME=${DB_NAME}
 
 
-RUN apt update && apt install mariadb-server -y  
-
 ADD ./tools/init.sh /usr/bin/init
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+RUN apt update && apt install mariadb-server -y  \
+&& chmod +x /usr/bin/init \ 
+&& init
 
-RUN chmod +x /usr/bin/init
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE 3306
-
-ENTRYPOINT [ "init" ]
 
 CMD [ "mysqld" ]
