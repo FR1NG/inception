@@ -11,14 +11,23 @@
 
 		index index.php index.html index.htm index.nginx-debian.html;
 
-		root   /data/www/html;
 		location ~ \.php$ {
+						root   /data/www/html;
 						include fastcgi_params;
 						fastcgi_split_path_info ^(.+\.php)(/.+)$;
 						fastcgi_pass wordpress:9000;
 						fastcgi_index index.php;
 						fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
 		}
+
+		# location /adminer/ {
+		# 				root   /var/www/adminer/;
+		# 				include fastcgi_params;
+		# 				fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		# 				fastcgi_pass adminer:9001;
+		# 				fastcgi_index index.php;
+		# 				fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+		# }
 
 	}
 

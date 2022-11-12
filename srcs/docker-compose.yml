@@ -6,6 +6,7 @@ services:
       - "443:443"
     volumes:
       - data_volume:/data/:rw
+      - adminer_volume:/var/www/adminer/
     networks:
       - hchakoub_network
     depends_on:
@@ -61,6 +62,12 @@ services:
       - FTP_PASSWORD=${FTP_PASSWORD}
       - FTP_ROOT_PASSWORD=${FTP_ROOT_PASSWORD}
     restart: always
+  adminer:
+    build: ./bonus/adminer/
+    networks:
+      - hchakoub_network
+    volumes:
+      - adminer_volume:/var/www/adminer/
 volumes:
   data_volume:
     driver: local
@@ -74,6 +81,7 @@ volumes:
       type: 'bind'
       o: 'bind'
       device: /home/${USER}/data/mariadb/
+  adminer_volume:
 networks:
   hchakoub_network:
     driver: bridge
