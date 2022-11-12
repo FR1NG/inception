@@ -4,6 +4,7 @@
 - add restart in case of crash
 - different between add and copy
 - add user to wordpress
+- add a volume for logs
 
 
 # inception

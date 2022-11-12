@@ -24,7 +24,7 @@ rmi:
 rmc:
 	docker rm -f $(CONTAINERS)
 
-rma: rmc rmi 
+rma: rmc rmi rmv rmdir
 
 rmv:
 	docker volume rm ${VOLUMS}
@@ -36,7 +36,7 @@ rmdir:
 	sudo rm -rf /home/${USER}/data/wordpress
 	sudo rm -rf /home/${USER}/data/mariadb
 
-purge:
+purge: rma
 	docker system prune -a
 
 .PHONY: test
