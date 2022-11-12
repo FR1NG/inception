@@ -13,13 +13,18 @@ build : mkdir
 	@echo "building..."
 	@docker compose up --build
 
+reconfig : rmconf build
+
+rmconf :
+	sudo rm -rf /home/${USER}/data/wordpress/www/html/wp-config.php
+
 rmi:
 	docker rmi -f $(IMAGES)
 
 rmc:
 	docker rm -f $(CONTAINERS)
 
-rma: rmi rmc
+rma: rmc rmi rmv rmdir
 
 rmv:
 	docker volume rm ${VOLUMS}
@@ -27,7 +32,11 @@ rmv:
 down:
 	docker compose down
 
-purge:
+rmdir:
+	sudo rm -rf /home/${USER}/data/wordpress
+	sudo rm -rf /home/${USER}/data/mariadb
+
+purge: rma
 	docker system prune -a
 
 .PHONY: test

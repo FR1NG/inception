@@ -21,6 +21,9 @@ services:
         - hchakoub_network
     environment:
       - "DB_HOST=${DB_HOST}"
+      - "DB_NAME=${DB_NAME}"
+      - "DB_USER=${DB_USER}"
+      - "DB_PASSWORD=${DB_PASSWORD}"
       - "WP_TITLE=${WP_TITLE}"
       - "WP_ADMIN=${WP_ADMIN}"
       - "WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}"
@@ -33,16 +36,12 @@ services:
   mysql:
     build:
       context: ./requirements/mysql/
-      args:
-        - DB_NAME=${DB_NAME}
-        - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
-        - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     volumes:
       - db_volume:/var/lib/mysql/:rw
     networks:
       - hchakoub_network
     environment:
+      - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
@@ -66,15 +65,15 @@ volumes:
   data_volume:
     driver: local
     driver_opts:
-      type: 'none'
+      type: 'bind'
       o: 'bind'
-      device: '/home/hchakoub/data/wordpress/'
+      device: /home/${USER}/data/wordpress/
   db_volume:
     driver: local
     driver_opts:
-      type: 'none'
+      type: 'bind'
       o: 'bind'
-      device: '/home/hchakoub/data/mariadb/'
+      device: /home/${USER}/data/mariadb/
 networks:
   hchakoub_network:
     driver: bridge
