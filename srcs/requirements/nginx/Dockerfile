@@ -11,7 +11,8 @@ RUN apt update && apt install nginx -y \
 && apt install vim -y \
 && /tools/nginx/ssl_setup.sh 
 
-ADD conf/default /etc/nginx/sites-available
+ADD conf/default /etc/nginx/sites-available/
+# ADD conf/hchakoub.com /etc/nginx/sites-available/
 
 ADD ./tools/entry.sh /usr/bin/entry
 
