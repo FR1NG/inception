@@ -13,6 +13,7 @@ services:
     depends_on:
       - wordpress
       - adminer
+      - grafana
   wordpress:
     build: ./requirements/wordpress/
     volumes:
@@ -70,6 +71,25 @@ services:
       - hchakoub_network
     volumes:
       - adminer_volume:/var/www/adminer/
+# monitoring services [ BEGIN ]
+  grafana:
+    extends:
+      file: ./bonus/monitoring/docker-compose.yml
+      service: grafana
+  prometheus:
+    extends:
+      file: ./bonus/monitoring/docker-compose.yml
+      service: prometheus
+  cadvisor:
+    extends:
+      file: ./bonus/monitoring/docker-compose.yml
+      service: cadvisor
+  node-exporter:
+    extends:
+      file: ./bonus/monitoring/docker-compose.yml
+      service: node-exporter
+# monitoring services [ END ]
+
 volumes:
   data_volume:
     driver: local

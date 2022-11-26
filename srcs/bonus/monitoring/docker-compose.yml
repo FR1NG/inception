@@ -11,7 +11,7 @@ services:
         - /sys:/host/sys:ro
         - /:/rootfs:ro
     networks:
-      - srcs_hchakoub_network
+      - hchakoub_network
     ports:
       - "9100:9100"
   cadvisor:
@@ -25,19 +25,24 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
-      - srcs_hchakoub_network
+      - hchakoub_network
   prometheus:
     build: ./prometheus/
     networks:
-      - srcs_hchakoub_network
+      - hchakoub_network
     ports:
       - "9090:9090"
+    depends_on:
+      - cadvisor
+      - node-exporter
   grafana:
     build: ./grafana/
     networks:
-      - srcs_hchakoub_network
+      - hchakoub_network
     ports:
       - "3000:3000"
-networks:
-  srcs_hchakoub_network:
-    external: true
+    depends_on:
+      - prometheus
+# networks:
+#   srcs_hchakoub_network:
+#     external: true
