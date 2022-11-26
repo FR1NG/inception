@@ -12,6 +12,6 @@ RUN chown mysql:root /var/log/mysql
 
 EXPOSE 3306
 
-ENTRYPOINT [ "init" ]
+# ENTRYPOINT [ "init" ]
 
 CMD [ "mysqld" ]

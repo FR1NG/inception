@@ -6,6 +6,8 @@ RUN apt update && apt install -y apt-transport-https \
 && echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | tee -a /etc/apt/sources.list.d/grafana.list \
 && apt update \
 && apt install grafana -y 
+
+COPY ./conf/grafana.ini /etc/grafana/grafana.ini
 # && service grafana-server enable
 
 

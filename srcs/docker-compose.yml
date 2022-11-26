@@ -12,6 +12,7 @@ services:
       - hchakoub_network
     depends_on:
       - wordpress
+      - adminer
   wordpress:
     build: ./requirements/wordpress/
     volumes:

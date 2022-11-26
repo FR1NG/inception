@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  telegraf:
+    container_name: telegraf
+    build:
+      context: ./telegraf/
+    ports:
+      - "14499:14499"
+    networks:
+      - monitoring_network
+
+networks:
+  monitoring_network:
+    driver: 'bridge'

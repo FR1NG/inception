@@ -7,7 +7,3 @@ mysql -u root  << EOF
     GRANT ALL PRIVILEGES ON wpdbname.* TO '${DB_USER}'@'%';
     FLUSH PRIVILEGES;
 EOF
-
-service mysql stop
-
-exec $@
