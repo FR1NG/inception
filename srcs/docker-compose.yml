@@ -104,6 +104,7 @@ volumes:
       o: 'bind'
       device: /home/${USER}/data/mariadb/
   adminer_volume:
+  grafana_data:
 networks:
   hchakoub_network:
     driver: bridge

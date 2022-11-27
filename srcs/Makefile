@@ -1,7 +1,7 @@
 
 IMAGES=${shell docker images -aq}
 CONTAINERS=${shell docker container ls -aq}
-VOLUMS=srcs_data_volume srcs_db_volume
+VOLUMS=srcs_data_volume srcs_db_volume monitoring_grafana_data srcs_adminer_volume
 up: 
 	docker compose up
 
