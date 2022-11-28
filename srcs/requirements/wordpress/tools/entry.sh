@@ -12,8 +12,8 @@
     #installing and enabling redis plugin
     wp plugin install redis-cache --allow-root
     wp config set WP_REDIS_HOST redis --allow-root
-    # wp config set WP_REDIS_PASSWORD RedisPassword --allow-root
     wp plugin activate redis-cache --allow-root
     wp redis enable --allow-root
+    chown -R www-data:www-data .
 # fi
 $@

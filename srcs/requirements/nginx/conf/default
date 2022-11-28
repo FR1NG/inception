@@ -35,6 +35,7 @@
 
 	server {
 		listen       443 ssl;
+		ssl_protocols TLSv1.2 TLSv1.3;
 		#listen 80;
 		server_name hchakoub.com;
 		access_log /logs/nginx/access.log;

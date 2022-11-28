@@ -12,7 +12,7 @@ RUN apt update && apt install nginx -y \
 && /tools/nginx/ssl_setup.sh 
 
 ADD conf/default /etc/nginx/sites-available/
-# ADD conf/hchakoub.com /etc/nginx/sites-available/
+ADD conf/nginx.conf /etc/nginx/nginx.conf
 
 ADD ./tools/entry.sh /usr/bin/entry
 

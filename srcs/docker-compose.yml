@@ -76,6 +76,17 @@ services:
       - hchakoub_network
     volumes:
       - adminer_volume:/var/www/adminer/
+  # portfolio [ begin ]
+  portfolio:
+    build: ./bonus/portfolio/
+    networks:
+      - hchakoub_network
+    volumes:
+      - ./bonus/portfolio/src:/var/www/html/
+    ports:
+      - 1337:1337
+    command: node /var/www/html/index.js
+  # portfolio [ end ]
 # monitoring services [ BEGIN ]
   grafana:
     extends:
