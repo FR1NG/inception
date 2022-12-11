@@ -1,13 +1,14 @@
 
+	access_log /logs/nginx/access.log;
+	error_log /logs/nginx/error.log;
+
+	ssl_certificate /etc/ssl/certs/hchakoub.42.fr.crt;
+	ssl_certificate_key /etc/ssl/private/hchakoub.42.fr.key;
+	
 	server {
 		listen       443 ssl;
 		#listen 80;
 		server_name hchakoub.42.fr;
-		access_log /logs/nginx/access.log;
-		error_log /logs/nginx/error.log;
-
-		ssl_certificate /etc/ssl/certs/hchakoub.42.fr.crt;
-		ssl_certificate_key /etc/ssl/private/hchakoub.42.fr.key;
 
 		index index.php index.html index.htm index.nginx-debian.html;
 
@@ -30,35 +31,30 @@
 			proxy_set_header Host $http_host;
 			proxy_pass  http://grafana:3000;
 		}
+
+		location /portfolio/ {
+			proxy_pass  http://portfolio;
+		}
 	}
 
+	server {
+    listen 443;
+    server_name portfolio.hchakoub.42.fr;
+    access_log /logs/nginx/access.log;
+	error_log /logs/nginx/error.log;
+
+	ssl_certificate /etc/ssl/certs/hchakoub.42.fr.crt;
+	ssl_certificate_key /etc/ssl/private/hchakoub.42.fr.key;
+    location / {
+        proxy_pass http://portfolio;
+    	}
+	}
 
 	server {
-		listen       443 ssl;
-		ssl_protocols TLSv1.2 TLSv1.3;
-		#listen 80;
-		server_name hchakoub.com;
-		access_log /logs/nginx/access.log;
-		error_log /logs/nginx/error.log;
+		listen 80;
 
-		ssl_certificate /etc/ssl/certs/hchakoub.42.fr.crt;
-		ssl_certificate_key /etc/ssl/private/hchakoub.42.fr.key;
+		server_name hchakoub.42.fr;
 
-		index index.html;
+		return 301 https://$host$request_uri;
 
-        location / {
-            root /var/www/html/;
-            index index.html;
-            }
-
-}
-
-
-server {
-	listen 80;
-
-	server_name hchakoub.42.fr;
-
-	return 301 https://$host$request_uri;
-
-}
+	}

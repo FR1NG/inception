@@ -12,13 +12,10 @@ services:
         - /:/rootfs:ro
     networks:
       - hchakoub_network
-    ports:
-      - "9100:9100"
+    restart: always
   cadvisor:
     build: ./cadvisor/
     container_name: cadvisor
-    ports:
-      - "8080:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -26,23 +23,22 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
       - hchakoub_network
+    restart: always
   prometheus:
     build: ./prometheus/
     networks:
       - hchakoub_network
-    ports:
-      - "9090:9090"
     depends_on:
       - cadvisor
       - node-exporter
+    restart: always
   grafana:
     build: ./grafana/
     networks:
       - hchakoub_network
     volumes:
       - grafana_data:/usr/share/grafana/data
-    ports:
-      - "3000:3000"
+    restart: always
     depends_on:
       - prometheus
 

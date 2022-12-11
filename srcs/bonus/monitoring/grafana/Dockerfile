@@ -12,5 +12,4 @@ COPY ./conf/grafana.ini /usr/share/grafana/conf/defaults.ini
 COPY ./tools/provisioning/ /usr/share/grafana/conf/provisioning/
 COPY ./tools/dashboards/ /var/lib/grafana/dashboards/
 
-# CMD ["grafana-server"]
 CMD ["grafana-server", "-homepath", "/usr/share/grafana"]

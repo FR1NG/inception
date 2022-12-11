@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   nginx:
+    container_name: nginx
     build: ./requirements/nginx/
     ports:
       - "443:443"
@@ -14,12 +15,15 @@ services:
       - wordpress
       - adminer
       - grafana
+      - portfolio
+    restart: always
   wordpress:
+    container_name: wordpress
     build: ./requirements/wordpress/
     volumes:
       - data_volume:/data/:rw
     depends_on:
-      - mysql
+      - mariadb
       - redis
     networks:
         - hchakoub_network
@@ -36,10 +40,11 @@ services:
       - "WP_USER=${WP_USER}"
       - "WP_USER_EMAIL=${WP_USER_EMAIL}"
       - "WP_USER_PASSWORD=${WP_USER_PASSWORD}"
-
-  mysql:
+    restart: always
+  mariadb:
+    container_name: mariadb
     build:
-      context: ./requirements/mysql/
+      context: ./requirements/mariadb/
       args:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
@@ -56,10 +61,12 @@ services:
       - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     restart: always
   redis:
+    container_name: redis
     build: ./bonus/redis/
     networks:
       - hchakoub_network
   ftp:
+    container_name: ftp
     build: ./bonus/ftp/
     ports:
       - "21:21"
@@ -71,40 +78,45 @@ services:
       - FTP_ROOT_PASSWORD=${FTP_ROOT_PASSWORD}
     restart: always
   adminer:
+    container_name: adminer
     build: ./bonus/adminer/
     networks:
       - hchakoub_network
     volumes:
       - adminer_volume:/var/www/adminer/
+    restart: always
   # portfolio [ begin ]
   portfolio:
+    container_name: portfolio
     build: ./bonus/portfolio/
     networks:
       - hchakoub_network
     volumes:
-      - ./bonus/portfolio/src:/var/www/html/
-    ports:
-      - 1337:1337
-    command: node /var/www/html/index.js
+      - ./bonus/portfolio/src/:/var/www/html/
+    restart: always
   # portfolio [ end ]
-# monitoring services [ BEGIN ]
+  # monitoring services [ BEGIN ]
   grafana:
+    container_name: grafana
     extends:
       file: ./bonus/monitoring/docker-compose.yml
       service: grafana
   prometheus:
+    container_name: prometheus
     extends:
       file: ./bonus/monitoring/docker-compose.yml
       service: prometheus
   cadvisor:
+    container_name: cadvisor
     extends:
       file: ./bonus/monitoring/docker-compose.yml
       service: cadvisor
   node-exporter:
+    container_name: node-exporter
     extends:
       file: ./bonus/monitoring/docker-compose.yml
       service: node-exporter
-# monitoring services [ END ]
+  # monitoring services [ END ]
 
 volumes:
   data_volume:

@@ -10,7 +10,9 @@ RUN apt update \
 && apt install redis -y
 
 ADD ./conf/redis.conf /etc/redis/redis.conf
+
 ADD ./tools/entry.sh /usr/bin/entry
+
 RUN chmod +x /usr/bin/entry
 
 CMD ["redis-server", "/etc/redis/redis.conf"]

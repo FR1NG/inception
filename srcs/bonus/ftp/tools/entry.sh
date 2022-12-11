@@ -11,4 +11,4 @@ if [ $USEREXIST -eq 0 ] ; then
     echo ${FTP_USER} >> /etc/vsftpd.userlist
     chmod -R g+w /home/${FTP_USER}/www/html
 fi
-$@
+exec $@

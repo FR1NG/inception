@@ -10,4 +10,5 @@ RUN chmod +x /usr/bin/entry
 RUN mkdir -p /data/www/html
 
 ENTRYPOINT [ "entry" ]
+
 CMD [ "vsftpd" ]

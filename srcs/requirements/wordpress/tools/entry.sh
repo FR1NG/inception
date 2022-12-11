@@ -16,4 +16,4 @@
     wp redis enable --allow-root
     chown -R www-data:www-data .
 # fi
-$@
+exec $@

@@ -2,13 +2,7 @@ FROM debian:buster
 
 WORKDIR /var/www/html/
 
-RUN apt update && apt install nodejs -y \
-&& apt install npm -y \
-&& npm init -y \
-&& npm install express
+RUN apt update && apt install nginx -y
+ADD conf/nginx.conf /etc/nginx/nginx.conf
 
-COPY ./src .
-
-CMD [ "node", "/var/www/html/index.js" ]
-
-# CMD [ "tail", "-f", "/dev/null" ]
+CMD ["nginx"]
