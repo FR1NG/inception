@@ -2,16 +2,19 @@
 IMAGES=${shell docker images -aq}
 CONTAINERS=${shell docker container ls -aq}
 VOLUMS=srcs_data_volume srcs_db_volume monitoring_grafana_data srcs_adminer_volume
+
 up: 
-	docker compose up
+	docker compose -f ./srcs/docker-compose.yml up
+
+ditached:
+	docker compose -f ./srcs/docker-compose.yml up -d
 
 mkdir:
 	mkdir -p /home/${USER}/data/wordpress
 	mkdir -p /home/${USER}/data/mariadb
 
 build : mkdir
-	@echo "building..."
-	@docker compose up --build
+	docker compose -f ./srcs/docker-compose.yml up --build
 
 reconfig : rmconf build
 
@@ -30,7 +33,7 @@ rmv:
 	docker volume rm ${VOLUMS}
 
 down:
-	docker compose down
+	docker compose -f ./srcs/docker-compose.yml down
 
 rmdir:
 	sudo rm -rf /home/${USER}/data/wordpress

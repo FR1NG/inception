@@ -16,7 +16,4 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN chown mysql:root /var/log/mysql
 
-EXPOSE 3306
-
-
 CMD [ "mysqld" ]

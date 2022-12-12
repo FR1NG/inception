@@ -8,7 +8,7 @@ services:
     volumes:
       - data_volume:/data/:rw
       - adminer_volume:/var/www/adminer/
-      - ./bonus/portfolio/src/:/var/www/html/
+      - ./requirements/bonus/portfolio/src/:/var/www/html/
     networks:
       - hchakoub_network
     depends_on:
@@ -62,12 +62,12 @@ services:
     restart: always
   redis:
     container_name: redis
-    build: ./bonus/redis/
+    build: ./requirements/bonus/redis/
     networks:
       - hchakoub_network
   ftp:
     container_name: ftp
-    build: ./bonus/ftp/
+    build: ./requirements/bonus/ftp/
     ports:
       - "21:21"
     volumes:
@@ -79,7 +79,7 @@ services:
     restart: always
   adminer:
     container_name: adminer
-    build: ./bonus/adminer/
+    build: ./requirements/bonus/adminer/
     networks:
       - hchakoub_network
     volumes:
@@ -88,33 +88,33 @@ services:
   # portfolio [ begin ]
   portfolio:
     container_name: portfolio
-    build: ./bonus/portfolio/
+    build: ./requirements/bonus/portfolio/
     networks:
       - hchakoub_network
     volumes:
-      - ./bonus/portfolio/src/:/var/www/html/
+      - ./requirements/bonus/portfolio/src/:/var/www/html/
     restart: always
   # portfolio [ end ]
   # monitoring services [ BEGIN ]
   grafana:
     container_name: grafana
     extends:
-      file: ./bonus/monitoring/docker-compose.yml
+      file: ./requirements/bonus/monitoring/docker-compose.yml
       service: grafana
   prometheus:
     container_name: prometheus
     extends:
-      file: ./bonus/monitoring/docker-compose.yml
+      file: ./requirements/bonus/monitoring/docker-compose.yml
       service: prometheus
   cadvisor:
     container_name: cadvisor
     extends:
-      file: ./bonus/monitoring/docker-compose.yml
+      file: ./requirements/bonus/monitoring/docker-compose.yml
       service: cadvisor
   node-exporter:
     container_name: node-exporter
     extends:
-      file: ./bonus/monitoring/docker-compose.yml
+      file: ./requirements/bonus/monitoring/docker-compose.yml
       service: node-exporter
   # monitoring services [ END ]
 

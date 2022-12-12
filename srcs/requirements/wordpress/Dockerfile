@@ -25,8 +25,6 @@ RUN chmod +x /usr/bin/entry
 
 RUN service php7.3-fpm start
 
-EXPOSE 9000
-
 ENTRYPOINT [ "entry" ]
 
 # runing fpm as root process
