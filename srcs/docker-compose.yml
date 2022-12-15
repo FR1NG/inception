@@ -2,6 +2,7 @@ version: '3.8'
 services:
   nginx:
     container_name: nginx
+    image: nginx
     build: ./requirements/nginx/
     ports:
       - "443:443"
@@ -19,6 +20,7 @@ services:
     restart: always
   wordpress:
     container_name: wordpress
+    image: wordpress
     build: ./requirements/wordpress/
     volumes:
       - data_volume:/data/:rw
@@ -43,6 +45,7 @@ services:
     restart: always
   mariadb:
     container_name: mariadb
+    image: mariadb
     build:
       context: ./requirements/mariadb/
       args:
@@ -62,11 +65,13 @@ services:
     restart: always
   redis:
     container_name: redis
+    image: redis
     build: ./requirements/bonus/redis/
     networks:
       - hchakoub_network
   ftp:
     container_name: ftp
+    image: ftp
     build: ./requirements/bonus/ftp/
     ports:
       - "21:21"
@@ -79,6 +84,7 @@ services:
     restart: always
   adminer:
     container_name: adminer
+    image: adminer
     build: ./requirements/bonus/adminer/
     networks:
       - hchakoub_network
@@ -88,6 +94,7 @@ services:
   # portfolio [ begin ]
   portfolio:
     container_name: portfolio
+    image: portfolio
     build: ./requirements/bonus/portfolio/
     networks:
       - hchakoub_network
@@ -98,21 +105,25 @@ services:
   # monitoring services [ BEGIN ]
   grafana:
     container_name: grafana
+    image: grafana
     extends:
       file: ./requirements/bonus/monitoring/docker-compose.yml
       service: grafana
   prometheus:
     container_name: prometheus
+    image: prometheus
     extends:
       file: ./requirements/bonus/monitoring/docker-compose.yml
       service: prometheus
   cadvisor:
     container_name: cadvisor
+    image: cadvisor
     extends:
       file: ./requirements/bonus/monitoring/docker-compose.yml
       service: cadvisor
   node-exporter:
     container_name: node-exporter
+    image: node-exporter
     extends:
       file: ./requirements/bonus/monitoring/docker-compose.yml
       service: node-exporter
